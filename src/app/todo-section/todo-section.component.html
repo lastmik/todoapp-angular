@@ -1,0 +1,23 @@
+<section class="todo_section">
+  <ul id="todo_list" class="todo_list">
+    <app-todo-element *ngFor="let todo of todos.elemetsData"></app-todo-element>
+  </ul>
+  <footer class="footer">
+    <span><strong id="count">0</strong> item left</span>
+    <button id="asc" class="button">ASC</button>
+    <button id="desc" class="button">DESC</button>
+
+    <ul class="filters">
+      <li>
+        <a id="all" class="selected" href="#/">All</a>
+      </li>
+      <li>
+        <a id="active" href="#/active">Active</a>
+      </li>
+      <li>
+        <a id="completed" href="#/completed">Completed</a>
+      </li>
+    </ul>
+    <button id="clear" class="button button_true">Clear completed</button>
+  </footer>
+</section>
