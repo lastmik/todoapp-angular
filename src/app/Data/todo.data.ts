@@ -1,6 +1,7 @@
-import { Injectable } from "@angular/core";
 
-@Injectable()
-export class ToDoData{
-  elemetsData =["","",""]
+export interface ToDoData{
+  todoData: string,
+  destroy:boolean,
+  checked:boolean,
+  dateCreate:Date
 }

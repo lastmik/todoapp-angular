@@ -1,23 +1,25 @@
 <section class="todo_section">
   <ul id="todo_list" class="todo_list">
-    <app-todo-element *ngFor="let todo of todos.elemetsData"></app-todo-element>
+
+      <app-todo-element   *ngFor="let todo of todoService.filterArray()" [todoText]="todo"></app-todo-element>
+
   </ul>
-  <footer class="footer">
-    <span><strong id="count">0</strong> item left</span>
-    <button id="asc" class="button">ASC</button>
-    <button id="desc" class="button">DESC</button>
+  <footer *ngIf="counterServise.getCountAllToDo() > 0" class="footer">
+    <span><strong>{{counterServise.getCount()}}</strong> item left</span>
+    <button id="asc" (click)="todoService.sortAsc()" class="button">ASC</button>
+    <button id="desc" (click)="todoService.sortDesc()" class="button">DESC</button>
 
     <ul class="filters">
       <li>
-        <a id="all" class="selected" href="#/">All</a>
+        <a id="all" #all [ngClass]="{selected:filterAll}" (click)="filterSelect(all)">All</a>
       </li>
       <li>
-        <a id="active" href="#/active">Active</a>
+        <a id="active" [ngClass]="{selected:filterActive}" #active (click)="filterSelect(active)">Active</a>
       </li>
       <li>
-        <a id="completed" href="#/completed">Completed</a>
+        <a id="completed" [ngClass]="{selected:filterCompleted}" #completed (click)="filterSelect(completed)">Completed</a>
       </li>
     </ul>
-    <button id="clear" class="button button_true">Clear completed</button>
+    <button id="clear" [ngClass]="{button_true:!(counterServise.getCountCompletedToDo() > 0)}" (click)="clearArray()" class="button">Clear completed</button>
   </footer>
 </section>

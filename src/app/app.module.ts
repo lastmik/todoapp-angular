@@ -5,20 +5,21 @@ import { AppComponent } from './app.component';
 import { TodoMainComponent } from './todo-main/todo-main.component';
 import { TodoElementComponent } from './todo-element/todo-element.component';
 import { TodoSectionComponent } from './todo-section/todo-section.component';
-import { ToDoData } from './Data/todo.data';
+import { ToDoService } from './data/todo.service';
+import { CounterService } from './data/counter.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoMainComponent,
     TodoElementComponent,
-    TodoSectionComponent
+    TodoSectionComponent,
   ],
   imports: [
     BrowserModule,
 
   ],
-  providers: [ToDoData],
+  providers: [ToDoService, CounterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ToDoData } from '../Data/todo.data';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CounterService } from '../data/counter.service';
+import { ToDoService } from '../data/todo.service';
+
+
 
 @Component({
   selector: 'app-todo-main',
@@ -7,13 +10,18 @@ import { ToDoData } from '../Data/todo.data';
   styleUrls: ['./todo-main.component.css']
 })
 export class TodoMainComponent implements OnInit {
-
-  constructor(private todos:ToDoData) { }
+  @Output() outNewToDo = new EventEmitter<string>();
+  constructor(private todoService:ToDoService, private counterSercice:CounterService) { }
 
   ngOnInit(): void {
   }
-  addNewToDO(element:HTMLInputElement){
-    this.todos.elemetsData.push(element.value);
-    element.value=""
+  addNewToDo(element:HTMLInputElement){
+    let text = element.value.trim();
+    if(text.length>=3&&text.length<=200){
+    this.todoService.addToDo(text);
+    this.counterSercice.counterIncrement();
+    element.value="";
+
+  }
   }
 }
