@@ -11,17 +11,22 @@ import { ToDoService } from '../data/todo.service';
 })
 export class TodoMainComponent implements OnInit {
   @Output() outNewToDo = new EventEmitter<string>();
-  constructor(private todoService:ToDoService, private counterSercice:CounterService) { }
+  constructor(private todoService: ToDoService, public counterSercice: CounterService) { }
 
   ngOnInit(): void {
   }
-  addNewToDo(element:HTMLInputElement){
+  addNewToDo(element: HTMLInputElement) {
     let text = element.value.trim();
-    if(text.length>=3&&text.length<=200){
-    this.todoService.addToDo(text);
-    this.counterSercice.counterIncrement();
-    element.value="";
+    if (text.length >= 3 && text.length <= 200) {
+      this.todoService.addToDo(text);
+      this.counterSercice.counterIncrement();
+      element.value = "";
 
+    }
   }
+
+  toggleAll() {
+    this.todoService.toggleAll(this.counterSercice.getCountActive(), this.counterSercice.getCountCompletedToDo());
+    this.counterSercice.toggleAll();
   }
 }

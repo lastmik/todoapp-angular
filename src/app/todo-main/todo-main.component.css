@@ -40,3 +40,6 @@
   box-sizing: border-box;
   background-color: white;
 }
+.checked {
+  color: #737373;
+}
