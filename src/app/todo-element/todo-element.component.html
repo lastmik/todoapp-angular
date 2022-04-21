@@ -1,6 +1,6 @@
 <div class="class inputBlock">
-  <label #toggle class="toggle" [ngClass]="{toggle_done:todoText.checked}" (click)="todoComplited()"></label>
-  <input #element class="todo"[ngClass]="{done:todoText.checked}" value="{{todoText.todoData}}" readonly (blur)="onBlur(element)" (dblclick)="changeToDO(element)">
+  <label #toggle class="toggle" [ngClass]="{toggle_done:todoElement.checked}" (click)="todoComplited()"></label>
+  <input #element class="todo"[ngClass]="{done:todoElement.checked}" value="{{todoElement.todoData}}" readonly (blur)="onBlur(element)" (dblclick)="changeToDO(element)">
   <div class="display"><button class="destroy" (click)="deleteToDo()"></button>
   </div>
 </div>

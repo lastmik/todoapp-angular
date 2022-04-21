@@ -10,23 +10,27 @@ import { ToDoService } from '../data/todo.service';
   styleUrls: ['./todo-element.component.css']
 })
 export class TodoElementComponent implements OnInit {
-  @Input() todoText: ToDoData;
+  @Input() todoElement: ToDoData;
   constructor(private todoService: ToDoService, private counterService: CounterService) { }
   private text: string = "";
   ngOnInit(): void {
 
   }
   deleteToDo() {
-    this.todoText.destroy = true;
-    this.counterService.counterDecrement()
+    this.todoElement.destroy = true;
+    if(this.todoElement.checked){
+    this.counterService.counterCompletedDecrement();
+  }else{
+    this.counterService.counterDecrement();
+  }
     this.todoService.deleteToDo();
 
   }
   todoComplited() {
 
-    this.todoText.checked = !this.todoText.checked
+    this.todoElement.checked = !this.todoElement.checked
 
-    if (!this.todoText.checked) {
+    if (!this.todoElement.checked) {
       this.counterService.counterIncrement();
       this.counterService.counterCompletedDecrement();
     } else {

@@ -1,7 +1,7 @@
 <section class="todo_section">
   <ul id="todo_list" class="todo_list">
 
-      <app-todo-element   *ngFor="let todo of todoService.filterArray()" [todoText]="todo"></app-todo-element>
+      <app-todo-element   *ngFor="let todo of todoService.filterArray()" [todoElement]="todo"></app-todo-element>
 
   </ul>
   <footer *ngIf="counterServise.getCountAllToDo() > 0" class="footer">
