@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ToDoService } from "./todo.service";
 
+// TODO: Check if we can remove this service at all and compute count based on rendered records
 
 @Injectable()
 export class CounterService {

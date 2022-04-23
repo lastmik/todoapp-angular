@@ -1,16 +1,21 @@
 <section class="todo_section">
   <ul id="todo_list" class="todo_list">
 
+    <!-- TODO: Remove reference to service from template -->
       <app-todo-element   *ngFor="let todo of todoService.filterArray()" [todoElement]="todo"></app-todo-element>
 
   </ul>
+  <!-- TODO: Try to move each part of logic out of template. Here we don't need to calculate count of todo and check if it gt 0 -->
   <footer *ngIf="counterServise.getCountAllToDo() > 0" class="footer">
     <span><strong>{{counterServise.getCount()}}</strong> item left</span>
+    <!-- TODO: Check if we can remove this ids -->
+    <!-- TODO: Refactor all event handlers according to https://angular.io/guide/styleguide#dont-prefix-output-properties -->
     <button id="asc" (click)="todoService.sortAsc()" class="button">ASC</button>
     <button id="desc" (click)="todoService.sortDesc()" class="button">DESC</button>
 
     <ul class="filters">
       <li>
+        <!-- TODO: Refactor to usage enum instead of passing direct html reference -->
         <a id="all" #all [ngClass]="{selected:filterAll}" (click)="filterSelect(all)">All</a>
       </li>
       <li>
@@ -20,6 +25,7 @@
         <a id="completed" [ngClass]="{selected:filterCompleted}" #completed (click)="filterSelect(completed)">Completed</a>
       </li>
     </ul>
+    <!-- TODO: Remove code duplication counterServise.getCountCompletedToDo() > 0 -->
     <button id="clear" [ngClass]="{button_true:!(counterServise.getCountCompletedToDo() > 0)}" (click)="clearArray()" class="button">Clear completed</button>
   </footer>
 </section>

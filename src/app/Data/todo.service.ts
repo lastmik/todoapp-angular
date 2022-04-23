@@ -4,14 +4,17 @@ import { ToDoData } from "./todo.data";
 
 
 export class ToDoService {
+  // TODO: Refactor to https://rxjs.dev/api/index/class/BehaviorSubject
   private todoArray: ToDoData[] = [];
   filter: string = "All"
 
   addToDo(name: string) {
+    // TODO: Move this model into class. Something like new Todo(name)
     this.todoArray.push({ todoData: name, destroy: false, checked: false, dateCreate: new Date });
   }
   deleteToDo() {
     this.todoArray = this.todoArray.filter((elem) => {
+      // TODO: Check if we can remove record by id
       return !elem.destroy
     });
 
@@ -46,6 +49,7 @@ export class ToDoService {
     }
   }
   sortAsc() {
+    // TODO: Don't use shortcuts
     this.todoArray = this.todoArray.sort((a, b) => {
       let elemA = a.todoData;
       let elemB = b.todoData;

@@ -1,3 +1,4 @@
+// TODO: Add ESLint Support and fix formatting issuess
 import { Component } from '@angular/core';
 import { ToDoData } from './data/todo.data';
 

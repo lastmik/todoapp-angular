@@ -6,6 +6,7 @@ import { ToDoService } from '../data/todo.service';
   selector: 'app-todo-section',
   templateUrl: './todo-section.component.html',
   styleUrls: ['./todo-section.component.css']
+  // TODO: Always use onPush https://angular.io/api/core/ChangeDetectorRef#usage-notes https://angular.io/api/core/ChangeDetectionStrategy
 })
 export class TodoSectionComponent implements OnInit {
 
@@ -13,12 +14,14 @@ export class TodoSectionComponent implements OnInit {
   filterActive: boolean = false;
   filterCompleted: boolean = false;
   counter: number = 0;
+  // TODO: Keep every service private and readonly for components
   constructor(public todoService: ToDoService, public counterServise: CounterService) {
 
   }
 
   ngOnInit(): void {
   }
+  // TODO: Always provide response types
   filterSelect(elem: HTMLAnchorElement) {
     this.todoService.filter = elem.innerHTML;
     elem.classList.add('selected');
