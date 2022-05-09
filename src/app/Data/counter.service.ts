@@ -10,28 +10,28 @@ export class CounterService {
   constructor(private todoSercise: ToDoService) {
 
   }
-  counterIncrement() {
+  counterIncrement() : void{
     this.todoCount++;
   }
-  counterDecrement() {
+  counterDecrement() : void{
     this.todoCount--;
   }
-  counterCompletedIncrement() {
+  counterCompletedIncrement() : void{
     this.todoCompletedCount++;
   }
-  counterCompletedDecrement() {
+  counterCompletedDecrement() : void{
     this.todoCompletedCount--;
   }
-  getCountAllToDo() {
+  get countAllToDo() {
     return this.todoCount + this.todoCompletedCount;
   }
-  getCountCompletedToDo() {
+  get countCompletedToDo() {
     return this.todoCompletedCount;
   }
-  getCountActive() {
+  get countActive() {
     return this.todoCount;
   }
-  getCount() {
+  get count() {
     if (this.todoSercise.filter === "All") {
       return this.todoCount + this.todoCompletedCount;
     } else if (this.todoSercise.filter === "Active") {
@@ -40,11 +40,11 @@ export class CounterService {
       return this.todoCompletedCount;
     }
   }
-  counterClearArray() {
-    this.todoCount = this.todoSercise.getArray().length;
+  counterClearArray() : void{
+    this.todoCount = this.todoSercise.array.length;
     this.todoCompletedCount = 0;
   }
-  toggleAll() {
+  toggleAll() : void{
     if (this.todoCount == 0 && this.todoCompletedCount > 0) {
       this.todoCount = this.todoCompletedCount;
       this.todoCompletedCount = 0;

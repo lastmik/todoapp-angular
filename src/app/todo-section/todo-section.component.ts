@@ -1,46 +1,59 @@
 import { Component, OnInit } from '@angular/core';
-import { CounterService } from '../data/counter.service';
-import { ToDoService } from '../data/todo.service';
+import {CounterService, FilterEnum, ToDoService, ToDoData} from '../data/services'
 
 @Component({
   selector: 'app-todo-section',
   templateUrl: './todo-section.component.html',
-  styleUrls: ['./todo-section.component.css']
+  styleUrls: ['./todo-section.component.css'],
+
   // TODO: Always use onPush https://angular.io/api/core/ChangeDetectorRef#usage-notes https://angular.io/api/core/ChangeDetectionStrategy
 })
-export class TodoSectionComponent implements OnInit {
 
+export class TodoSectionComponent implements OnInit {
+  filterEnum = FilterEnum;
   filterAll: boolean = true;
   filterActive: boolean = false;
   filterCompleted: boolean = false;
   counter: number = 0;
+  toDoArray:ToDoData[];
+
+
   // TODO: Keep every service private and readonly for components
-  constructor(public todoService: ToDoService, public counterServise: CounterService) {
+  constructor(private todoService: ToDoService, public counterServise: CounterService,  ) {
 
   }
 
   ngOnInit(): void {
+    this.todoService.stream.subscribe((val: ToDoData[])=>{
+      this.toDoArray=val;
+    })
   }
   // TODO: Always provide response types
-  filterSelect(elem: HTMLAnchorElement) {
-    this.todoService.filter = elem.innerHTML;
-    elem.classList.add('selected');
-    if (this.todoService.filter === "All") {
+  onFilterSelect(filter:string):void {
+
+    this.todoService.filter=filter;
+    if (filter === this.filterEnum.filterAll) {
       this.filterAll = true;
       this.filterActive = this.filterCompleted = false;
-    } else if (this.todoService.filter === "Active") {
+    } else if (filter===this.filterEnum.filterActive) {
       this.filterActive = true;
       this.filterAll = this.filterCompleted = false;
-    } else {
+    } else if(filter === this.filterEnum.filterCompleted){
       this.filterCompleted = true;
       this.filterAll = this.filterActive = false;
     }
+    this.todoService.filterArray();
   }
-  clearArray() {
+  onClearArray():void {
     this.todoService.clearArray();
     this.counterServise.counterClearArray();
   }
-
+  onSortAsc(){
+    this.todoService.sortAsc;
+  }
+  onSortDesc(){
+    this.todoService.sortDesc;
+  }
 
 
 }

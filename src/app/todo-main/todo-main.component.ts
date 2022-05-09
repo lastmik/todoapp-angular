@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CounterService } from '../data/counter.service';
-import { ToDoService } from '../data/todo.service';
+import { FormControl, Validators } from '@angular/forms';
+import { MAX_LENGHT, MIN_LENGHT } from 'src/env';
+import {CounterService, ToDoService} from '../data/services'
 
 
 
@@ -12,21 +13,25 @@ import { ToDoService } from '../data/todo.service';
 export class TodoMainComponent implements OnInit {
   @Output() outNewToDo = new EventEmitter<string>();
   constructor(private todoService: ToDoService, public counterSercice: CounterService) { }
-
+  inputControl:FormControl;
+  isValid:string;
   ngOnInit(): void {
+    this.inputControl = new FormControl("",[Validators.required, Validators.minLength(MIN_LENGHT), Validators.maxLength(MAX_LENGHT)]);
+    this.inputControl.statusChanges.subscribe((status)=>this.isValid=status);
   }
-  addNewToDo(element: HTMLInputElement) {
+  addNewToDo(element: HTMLInputElement) :void {
     let text = element.value.trim();
-    if (text.length >= 3 && text.length <= 200) {
+
+     if(this.isValid==="VALID"){
       this.todoService.addToDo(text);
       this.counterSercice.counterIncrement();
       element.value = "";
+     }
 
-    }
   }
 
-  toggleAll() {
-    this.todoService.toggleAll(this.counterSercice.getCountActive(), this.counterSercice.getCountCompletedToDo());
+  toggleAll() : void{
+    this.todoService.toggleAll(this.counterSercice.countActive, this.counterSercice.countCompletedToDo);
     this.counterSercice.toggleAll();
   }
 }

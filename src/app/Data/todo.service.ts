@@ -1,4 +1,5 @@
 
+import { BehaviorSubject } from "rxjs";
 import { ToDoData } from "./todo.data";
 
 
@@ -7,37 +8,41 @@ export class ToDoService {
   // TODO: Refactor to https://rxjs.dev/api/index/class/BehaviorSubject
   private todoArray: ToDoData[] = [];
   filter: string = "All"
+  stream = new BehaviorSubject(this.todoArray)
 
-  addToDo(name: string) {
+  addToDo(name: string) :void{
     // TODO: Move this model into class. Something like new Todo(name)
-    this.todoArray.push({ todoData: name, destroy: false, checked: false, dateCreate: new Date });
+    this.todoArray.push(this.newToDo(name));
+    this.filterArray();
+
   }
-  deleteToDo() {
+
+  deleteToDo(id:string) :void {
     this.todoArray = this.todoArray.filter((elem) => {
       // TODO: Check if we can remove record by id
-      return !elem.destroy
+      return !(elem.id===id)
     });
 
   }
-  getArray() {
+  get array() {
     return this.todoArray;
   }
-  filterArray() {
+  filterArray() : void{
     if (this.filter === 'All') {
-      return this.todoArray;
+      this.stream.next(this.todoArray);
     } else if (this.filter === 'Active') {
-
-      return this.todoArray.filter((elem) => elem.checked == false);
+      this.stream.next(this.todoArray.filter((elem) => elem.checked == false));
     } else {
-      return this.todoArray.filter((elem) => elem.checked == true);
+      this.stream.next(this.todoArray.filter((elem) => elem.checked == true));
     }
+
   }
-  clearArray() {
+  clearArray() :void {
     this.todoArray = this.todoArray.filter((elem) => {
       return elem.checked ? false : true;
     });
   }
-  toggleAll(countActive: number, countCompleted: number) {
+  toggleAll(countActive: number, countCompleted: number) :void {
     if (countActive > 0) {
       this.todoArray.forEach((elem) => {
         elem.checked = true;
@@ -48,7 +53,7 @@ export class ToDoService {
       });
     }
   }
-  sortAsc() {
+  sortAsc() :void{
     // TODO: Don't use shortcuts
     this.todoArray = this.todoArray.sort((a, b) => {
       let elemA = a.todoData;
@@ -60,7 +65,7 @@ export class ToDoService {
       }
     })
   }
-  sortDesc() {
+  sortDesc() :void{
 
     this.todoArray = this.todoArray.sort((a, b) => {
       let elemA = a.todoData;
@@ -71,6 +76,16 @@ export class ToDoService {
         return elemA < elemB ? 1 : -1;
       }
     })
+  }
+
+  newToDo(name:string){
+    return {
+      id: 'todo'+(new Date).getTime(),
+      todoData: name,
+      destroy: false,
+       checked: false,
+       dateCreate: new Date
+      }
   }
 
 }

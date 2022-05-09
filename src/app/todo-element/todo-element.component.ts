@@ -1,33 +1,40 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CounterService } from '../data/counter.service';
-import { ToDoData } from '../data/todo.data';
-import { ToDoService } from '../data/todo.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { MAX_LENGHT, MIN_LENGHT } from 'src/env';
+
+import {CounterService, ToDoData, ToDoService} from '../data/services'
+
 
 
 @Component({
   selector: 'app-todo-element',
   templateUrl: './todo-element.component.html',
-  styleUrls: ['./todo-element.component.css']
-})
-export class TodoElementComponent implements OnInit {
-  @Input() todoElement: ToDoData;
-  constructor(private todoService: ToDoService, private counterService: CounterService) { }
-  private text: string = "";
-  // TODO: remove unused code 
-  ngOnInit(): void {
+  styleUrls: ['./todo-element.component.css'],
 
+})
+export class TodoElementComponent implements OnInit{
+  @Input() todoElement: ToDoData;
+  private text: string = "";
+  inputControl:FormControl;
+  isValid:string;
+  constructor(private todoService: ToDoService, private counterService: CounterService, private render: Renderer2) { }
+
+  // TODO: remove unused code
+  ngOnInit(): void {
+    this.inputControl = new FormControl(this.todoElement.todoData,[Validators.required, Validators.minLength(MIN_LENGHT), Validators.maxLength(MAX_LENGHT)]);
+    this.inputControl.statusChanges.subscribe((status)=>this.isValid=status);
   }
-  deleteToDo() {
-    this.todoElement.destroy = true;
-    if(this.todoElement.checked){
+  deleteToDo() :void{
+  if(this.todoElement.checked){
     this.counterService.counterCompletedDecrement();
   }else{
     this.counterService.counterDecrement();
   }
-    this.todoService.deleteToDo();
+
+   this.todoService.deleteToDo(this.todoElement.id);
 
   }
-  todoComplited() {
+  todoComplited() :void{
 
     this.todoElement.checked = !this.todoElement.checked
 
@@ -40,28 +47,24 @@ export class TodoElementComponent implements OnInit {
     }
 
   }
-  changeToDO(elem: HTMLInputElement) {
-    this.text = elem.value;
-    console.log(this.text);
-    // TODO: Remove direct manipulating of DOM
-    // Use data binding instead https://angular.io/guide/binding-syntax
-    // In rare cases we could utilize https://angular.io/api/core/Renderer2
-    elem.classList.add("editing");
+  changeToDO(elem: HTMLInputElement) :void {
+    this.text = this.todoElement.todoData;
+    this.render.addClass(elem, "editing");
     elem.readOnly = false;
   }
-  onBlur(elem: HTMLInputElement) {
+  onBlur(elem: HTMLInputElement) : void{
+
     if (elem.classList.contains("editing")) {
       // TODO: move trimming functionality into directive
       let changedText = elem.value.trim();
-      // TODO: Move validation values into constants 
-      // TODO: Refactor input validation by using https://angular.io/guide/form-validation#validating-input-in-template-driven-forms
-      if (changedText.length >= 3 && changedText.length <= 200) {
-        elem.value = changedText;
 
+      if (this.isValid==="VALID") {
+        this.todoElement.todoData = changedText;
       } else {
         elem.value = this.text;
       }
-      elem.classList.remove("editing");
+      this.render.removeClass(elem, "editing")
+
       elem.readOnly = true;
     }
   }

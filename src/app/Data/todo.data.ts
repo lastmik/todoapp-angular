@@ -1,7 +1,7 @@
 
 export interface ToDoData {
+  id:string,
   todoData: string,
-  destroy: boolean,
   checked: boolean,
   dateCreate: Date
 }
