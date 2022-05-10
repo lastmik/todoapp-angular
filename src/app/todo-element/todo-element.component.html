@@ -1,11 +1,12 @@
 <div class="class inputBlock">
-  <label #toggle class="toggle" [ngClass]="{toggle_done:todoElement.checked}" (click)="todoComplited()"></label>
+  <label #toggle class="toggle" [ngClass]="{toggle_done:todoElement.checked}" (click)="onTodoComplited()"></label>
   <input #element class="todo"
   [ngClass]="{done:todoElement.checked}"
   [formControl]="inputControl"
   readonly
   (blur)="onBlur(element)"
-  (dblclick)="changeToDO(element)"
+  (dblclick)="onChangeToDO(element)"
+  trim
   >
   <div class="display"><button class="destroy" (click)="deleteToDo()"></button>
   </div>

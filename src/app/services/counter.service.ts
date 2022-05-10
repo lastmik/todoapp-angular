@@ -52,5 +52,6 @@ export class CounterService {
       this.todoCompletedCount += this.todoCount;
       this.todoCount = 0;
     }
+
   }
 }

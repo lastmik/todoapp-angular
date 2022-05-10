@@ -1,10 +1,12 @@
 <div class="inputBlock">
   <label  id="toggle_all" class="toggle-all" type="checkbox"
   [ngClass]="{checked: counterSercice.countActive===0 && counterSercice.countCompletedToDo> 0}"
-  (click)="toggleAll()"
+  (click)="onToggleAll()"
   >
 </label>
-  <input #input  class="input" (keyup.enter)="addNewToDo(input)"
+  <input #input  class="input" (keyup.enter)="onAddNewToDo(input)"
   [formControl]="inputControl"
-  placeholder="What needs to be done?" />
+  placeholder="What needs to be done?"
+  trim
+  />
 </div>

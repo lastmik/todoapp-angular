@@ -1,32 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import {CounterService, FilterEnum, ToDoService, ToDoData} from '../data/services'
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import {CounterService, FilterEnum, ToDoService, ToDoData} from '../services'
 
 @Component({
   selector: 'app-todo-section',
   templateUrl: './todo-section.component.html',
   styleUrls: ['./todo-section.component.css'],
-
+  changeDetection: ChangeDetectionStrategy.OnPush
   // TODO: Always use onPush https://angular.io/api/core/ChangeDetectorRef#usage-notes https://angular.io/api/core/ChangeDetectionStrategy
 })
 
 export class TodoSectionComponent implements OnInit {
+  items: Observable<ToDoData[]>
+
   filterEnum = FilterEnum;
   filterAll: boolean = true;
   filterActive: boolean = false;
   filterCompleted: boolean = false;
   counter: number = 0;
-  toDoArray:ToDoData[];
+
 
 
   // TODO: Keep every service private and readonly for components
-  constructor(private todoService: ToDoService, public counterServise: CounterService,  ) {
-
+  constructor(private todoService: ToDoService, private counterServise: CounterService,  ) {
+    this.items = todoService.stream;
   }
 
   ngOnInit(): void {
-    this.todoService.stream.subscribe((val: ToDoData[])=>{
-      this.toDoArray=val;
-    })
+
   }
   // TODO: Always provide response types
   onFilterSelect(filter:string):void {
@@ -48,12 +49,20 @@ export class TodoSectionComponent implements OnInit {
     this.todoService.clearArray();
     this.counterServise.counterClearArray();
   }
-  onSortAsc(){
-    this.todoService.sortAsc;
+  onSortAsc():void{
+    this.todoService.sortAsc();
   }
-  onSortDesc(){
-    this.todoService.sortDesc;
+  onSortDesc():void{
+    this.todoService.sortDesc();
   }
-
+  countHandler():boolean{
+    return (this.counterServise.countAllToDo > 0)
+  }
+  countCompletedHandler():boolean{
+    return (this.counterServise.countCompletedToDo > 0)
+  }
+  getCount():number{
+    return this.counterServise.count;
+  }
 
 }

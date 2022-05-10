@@ -1,6 +1,6 @@
 
 import { BehaviorSubject } from "rxjs";
-import { ToDoData } from "./todo.data";
+import { ToDoData } from "../data/todo.data";
 
 
 
@@ -22,6 +22,7 @@ export class ToDoService {
       // TODO: Check if we can remove record by id
       return !(elem.id===id)
     });
+    this.filterArray()
 
   }
   get array() {
@@ -41,6 +42,7 @@ export class ToDoService {
     this.todoArray = this.todoArray.filter((elem) => {
       return elem.checked ? false : true;
     });
+    this.filterArray();
   }
   toggleAll(countActive: number, countCompleted: number) :void {
     if (countActive > 0) {
@@ -52,30 +54,31 @@ export class ToDoService {
         elem.checked = false;
       });
     }
+    this.filterArray();
   }
   sortAsc() :void{
-    // TODO: Don't use shortcuts
-    this.todoArray = this.todoArray.sort((a, b) => {
-      let elemA = a.todoData;
-      let elemB = b.todoData;
-      if (elemA === elemB) {
-        return a.dateCreate > b.dateCreate ? 1 : -1;
+
+    this.todoArray = this.todoArray.sort((elemA, elemB) => {
+
+      if (elemA.todoData === elemB.todoData) {
+        return elemA.dateCreate > elemB.dateCreate ? 1 : -1;
       } else {
         return elemA > elemB ? 1 : -1;
       }
     })
+    this.filterArray();
   }
   sortDesc() :void{
 
-    this.todoArray = this.todoArray.sort((a, b) => {
-      let elemA = a.todoData;
-      let elemB = b.todoData;
-      if (elemA === elemB) {
-        return a.dateCreate < b.dateCreate ? 1 : -1;
+    this.todoArray = this.todoArray.sort((elemA, elemB) => {
+
+      if (elemA.todoData === elemB.todoData) {
+        return elemA.dateCreate < elemB.dateCreate ? 1 : -1;
       } else {
         return elemA < elemB ? 1 : -1;
       }
     })
+    this.filterArray();
   }
 
   newToDo(name:string){

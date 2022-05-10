@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, Renderer2 } from '@a
 import { FormControl, Validators } from '@angular/forms';
 import { MAX_LENGHT, MIN_LENGHT } from 'src/env';
 
-import {CounterService, ToDoData, ToDoService} from '../data/services'
+import {CounterService, ToDoData, ToDoService} from '../services'
 
 
 
@@ -10,7 +10,7 @@ import {CounterService, ToDoData, ToDoService} from '../data/services'
   selector: 'app-todo-element',
   templateUrl: './todo-element.component.html',
   styleUrls: ['./todo-element.component.css'],
-
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoElementComponent implements OnInit{
   @Input() todoElement: ToDoData;
@@ -34,7 +34,7 @@ export class TodoElementComponent implements OnInit{
    this.todoService.deleteToDo(this.todoElement.id);
 
   }
-  todoComplited() :void{
+  onTodoComplited() :void{
 
     this.todoElement.checked = !this.todoElement.checked
 
@@ -45,9 +45,10 @@ export class TodoElementComponent implements OnInit{
       this.counterService.counterDecrement();
       this.counterService.counterCompletedIncrement();
     }
+    this.todoService.filterArray();
 
   }
-  changeToDO(elem: HTMLInputElement) :void {
+  onChangeToDO(elem: HTMLInputElement) :void {
     this.text = this.todoElement.todoData;
     this.render.addClass(elem, "editing");
     elem.readOnly = false;
@@ -56,10 +57,9 @@ export class TodoElementComponent implements OnInit{
 
     if (elem.classList.contains("editing")) {
       // TODO: move trimming functionality into directive
-      let changedText = elem.value.trim();
 
       if (this.isValid==="VALID") {
-        this.todoElement.todoData = changedText;
+        this.todoElement.todoData = elem.value;
       } else {
         elem.value = this.text;
       }

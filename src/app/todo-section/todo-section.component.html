@@ -2,12 +2,12 @@
   <ul id="todo_list" class="todo_list">
 
     <!-- TODO: Remove reference to service from template -->
-      <app-todo-element   *ngFor="let todo of toDoArray" [todoElement]="todo"></app-todo-element>
+      <app-todo-element   *ngFor="let todo of items|async" [todoElement]="todo"></app-todo-element>
 
   </ul>
   <!-- TODO: Try to move each part of logic out of template. Here we don't need to calculate count of todo and check if it gt 0 -->
-  <footer *ngIf="counterServise.countAllToDo > 0" class="footer">
-    <span><strong>{{counterServise.count}}</strong> item left</span>
+  <footer *ngIf="countHandler()" class="footer">
+    <span><strong>{{getCount()}}</strong> item left</span>
     <!-- TODO: Check if we can remove this ids -->
     <!-- TODO: Refactor all event handlers according to https://angular.io/guide/styleguide#dont-prefix-output-properties -->
     <button  (click)="onSortAsc()" class="button">ASC</button>
@@ -26,6 +26,6 @@
       </li>
     </ul>
     <!-- TODO: Remove code duplication counterServise.getCountCompletedToDo() > 0 -->
-    <button [ngClass]="{button_true:!(counterServise.countCompletedToDo > 0)}" (click)="onClearArray()" class="button">Clear completed</button>
+    <button [ngClass]="{button_true:!(countCompletedHandler())}" (click)="onClearArray()" class="button">Clear completed</button>
   </footer>
 </section>
