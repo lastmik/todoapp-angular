@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAX_LENGHT, MIN_LENGHT } from 'src/env';
 
@@ -9,8 +9,8 @@ import {CounterService, ToDoData, ToDoService} from '../services'
 @Component({
   selector: 'app-todo-element',
   templateUrl: './todo-element.component.html',
-  styleUrls: ['./todo-element.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./todo-element.component.css']
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoElementComponent implements OnInit{
   @Input() todoElement: ToDoData;
