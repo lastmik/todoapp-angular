@@ -10,16 +10,16 @@ export class CounterService {
   constructor(private todoSercise: ToDoService) {
 
   }
-  counterIncrement() : void{
+  counterIncrement(): void {
     this.todoCount++;
   }
-  counterDecrement() : void{
+  counterDecrement(): void {
     this.todoCount--;
   }
-  counterCompletedIncrement() : void{
+  counterCompletedIncrement(): void {
     this.todoCompletedCount++;
   }
-  counterCompletedDecrement() : void{
+  counterCompletedDecrement(): void {
     this.todoCompletedCount--;
   }
   get countAllToDo() {
@@ -40,11 +40,11 @@ export class CounterService {
       return this.todoCompletedCount;
     }
   }
-  counterClearArray() : void{
+  counterClearArray(): void {
     this.todoCount = this.todoSercise.array.length;
     this.todoCompletedCount = 0;
   }
-  toggleAll() : void{
+  toggleAll(): void {
     if (this.todoCount == 0 && this.todoCompletedCount > 0) {
       this.todoCount = this.todoCompletedCount;
       this.todoCompletedCount = 0;

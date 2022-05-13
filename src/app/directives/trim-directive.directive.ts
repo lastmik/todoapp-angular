@@ -5,14 +5,14 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 })
 export class TrimDirective {
 
-  constructor(private elementRef:ElementRef) {
+  constructor(private elementRef: ElementRef) {
 
-   }
-   @HostListener("blur") onBlur(){
+  }
+  @HostListener("blur") onBlur() {
     this.elementRef.nativeElement.value = this.elementRef.nativeElement.value.trim();
-   }
-   @HostListener("keyup.enter") onKeyUpEnter(){
+  }
+  @HostListener("keyup.enter") onKeyUpEnter() {
     this.elementRef.nativeElement.value = this.elementRef.nativeElement.value.trim();
-   }
+  }
 
 }

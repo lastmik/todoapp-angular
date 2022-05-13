@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
-
 // TODO: Move into barrel https://basarat.gitbook.io/typescript/main-1/barrel
-import {CounterService, ToDoService, TrimDirective} from './services'
+import { CounterService, ToDoService, TrimDirective } from './services'
 import { ToDoModule } from './modules/todo.module';
-
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,8 +13,8 @@ import { ToDoModule } from './modules/todo.module';
 
   ],
   imports: [
-
-    ToDoModule
+    ToDoModule,
+    AppRoutingModule
   ],
   // TODO: Use providerIn: root instead
   providers: [ToDoService, CounterService],

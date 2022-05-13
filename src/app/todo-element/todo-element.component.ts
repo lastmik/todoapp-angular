@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAX_LENGHT, MIN_LENGHT } from 'src/env';
 
-import {CounterService, ToDoData, ToDoService} from '../services'
+import { CounterService, ToDoData, ToDoService } from '../services'
 
 
 
@@ -12,29 +12,29 @@ import {CounterService, ToDoData, ToDoService} from '../services'
   styleUrls: ['./todo-element.component.css']
   //changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TodoElementComponent implements OnInit{
+export class TodoElementComponent implements OnInit {
   @Input() todoElement: ToDoData;
   private text: string = "";
-  inputControl:FormControl;
-  isValid:string;
+  inputControl: FormControl;
+  isValid: string;
   constructor(private todoService: ToDoService, private counterService: CounterService, private render: Renderer2) { }
 
   // TODO: remove unused code
   ngOnInit(): void {
-    this.inputControl = new FormControl(this.todoElement.todoData,[Validators.required, Validators.minLength(MIN_LENGHT), Validators.maxLength(MAX_LENGHT)]);
-    this.inputControl.statusChanges.subscribe((status)=>this.isValid=status);
+    this.inputControl = new FormControl(this.todoElement.todoData, [Validators.required, Validators.minLength(MIN_LENGHT), Validators.maxLength(MAX_LENGHT)]);
+    this.inputControl.statusChanges.subscribe((status) => this.isValid = status);
   }
-  deleteToDo() :void{
-  if(this.todoElement.checked){
-    this.counterService.counterCompletedDecrement();
-  }else{
-    this.counterService.counterDecrement();
-  }
+  deleteToDo(): void {
+    if (this.todoElement.checked) {
+      this.counterService.counterCompletedDecrement();
+    } else {
+      this.counterService.counterDecrement();
+    }
 
-   this.todoService.deleteToDo(this.todoElement.id);
+    this.todoService.deleteToDo(this.todoElement.id);
 
   }
-  onTodoComplited() :void{
+  onTodoComplited(): void {
 
     this.todoElement.checked = !this.todoElement.checked
 
@@ -48,17 +48,17 @@ export class TodoElementComponent implements OnInit{
     this.todoService.filterArray();
 
   }
-  onChangeToDO(elem: HTMLInputElement) :void {
+  onChangeToDO(elem: HTMLInputElement): void {
     this.text = this.todoElement.todoData;
     this.render.addClass(elem, "editing");
     elem.readOnly = false;
   }
-  onBlur(elem: HTMLInputElement) : void{
+  onBlur(elem: HTMLInputElement): void {
 
     if (elem.classList.contains("editing")) {
       // TODO: move trimming functionality into directive
 
-      if (this.isValid==="VALID") {
+      if (this.isValid === "VALID") {
         this.todoElement.todoData = elem.value;
       } else {
         elem.value = this.text;

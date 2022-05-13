@@ -10,17 +10,17 @@ export class ToDoService {
   filter: string = "All"
   stream = new BehaviorSubject(this.todoArray)
 
-  addToDo(name: string) :void{
+  addToDo(name: string): void {
     // TODO: Move this model into class. Something like new Todo(name)
     this.todoArray.push(this.newToDo(name));
     this.filterArray();
 
   }
 
-  deleteToDo(id:string) :void {
+  deleteToDo(id: string): void {
     this.todoArray = this.todoArray.filter((elem) => {
       // TODO: Check if we can remove record by id
-      return !(elem.id===id)
+      return !(elem.id === id)
     });
     this.filterArray()
 
@@ -28,7 +28,7 @@ export class ToDoService {
   get array() {
     return this.todoArray;
   }
-  filterArray() : void{
+  filterArray(): void {
     if (this.filter === 'All') {
       this.stream.next(this.todoArray);
     } else if (this.filter === 'Active') {
@@ -38,13 +38,13 @@ export class ToDoService {
     }
 
   }
-  clearArray() :void {
+  clearArray(): void {
     this.todoArray = this.todoArray.filter((elem) => {
       return elem.checked ? false : true;
     });
     this.filterArray();
   }
-  toggleAll(countActive: number, countCompleted: number) :void {
+  toggleAll(countActive: number, countCompleted: number): void {
     if (countActive > 0) {
       this.todoArray.forEach((elem) => {
         elem.checked = true;
@@ -56,7 +56,7 @@ export class ToDoService {
     }
     this.filterArray();
   }
-  sortAsc() :void{
+  sortAsc(): void {
 
     this.todoArray = this.todoArray.sort((elemA, elemB) => {
 
@@ -68,7 +68,7 @@ export class ToDoService {
     })
     this.filterArray();
   }
-  sortDesc() :void{
+  sortDesc(): void {
 
     this.todoArray = this.todoArray.sort((elemA, elemB) => {
 
@@ -81,14 +81,14 @@ export class ToDoService {
     this.filterArray();
   }
 
-  newToDo(name:string){
+  newToDo(name: string) {
     return {
-      id: 'todo'+(new Date).getTime(),
+      id: 'todo' + (new Date).getTime(),
       todoData: name,
       destroy: false,
-       checked: false,
-       dateCreate: new Date
-      }
+      checked: false,
+      dateCreate: new Date
+    }
   }
 
 }

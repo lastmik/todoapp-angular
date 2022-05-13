@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {CounterService, FilterEnum, ToDoService, ToDoData} from '../services'
+import { CounterService, FilterEnum, ToDoService, ToDoData } from '../services'
 
 @Component({
   selector: 'app-todo-section',
@@ -22,7 +22,7 @@ export class TodoSectionComponent implements OnInit {
 
 
   // TODO: Keep every service private and readonly for components
-  constructor(private todoService: ToDoService, private counterServise: CounterService,  ) {
+  constructor(private todoService: ToDoService, private counterServise: CounterService,) {
     this.items = todoService.stream;
   }
 
@@ -30,38 +30,38 @@ export class TodoSectionComponent implements OnInit {
 
   }
   // TODO: Always provide response types
-  onFilterSelect(filter:string):void {
+  onFilterSelect(filter: string): void {
 
-    this.todoService.filter=filter;
+    this.todoService.filter = filter;
     if (filter === this.filterEnum.filterAll) {
       this.filterAll = true;
       this.filterActive = this.filterCompleted = false;
-    } else if (filter===this.filterEnum.filterActive) {
+    } else if (filter === this.filterEnum.filterActive) {
       this.filterActive = true;
       this.filterAll = this.filterCompleted = false;
-    } else if(filter === this.filterEnum.filterCompleted){
+    } else if (filter === this.filterEnum.filterCompleted) {
       this.filterCompleted = true;
       this.filterAll = this.filterActive = false;
     }
     this.todoService.filterArray();
   }
-  onClearArray():void {
+  onClearArray(): void {
     this.todoService.clearArray();
     this.counterServise.counterClearArray();
   }
-  onSortAsc():void{
+  onSortAsc(): void {
     this.todoService.sortAsc();
   }
-  onSortDesc():void{
+  onSortDesc(): void {
     this.todoService.sortDesc();
   }
-  countHandler():boolean{
+  countHandler(): boolean {
     return (this.counterServise.countAllToDo > 0)
   }
-  countCompletedHandler():boolean{
+  countCompletedHandler(): boolean {
     return (this.counterServise.countCompletedToDo > 0)
   }
-  getCount():number{
+  getCount(): number {
     return this.counterServise.count;
   }
 

@@ -8,18 +8,18 @@ import { TodoSectionComponent } from "../todo-section/todo-section.component";
 
 
 @NgModule({
-  declarations:[
+  declarations: [
     TodoMainComponent,
     TodoElementComponent,
     TodoSectionComponent
 
   ],
-  exports:[
+  exports: [
     TodoMainComponent,
     TodoElementComponent,
     TodoSectionComponent
   ],
-  imports:[
+  imports: [
     CommonModule,
     BrowserModule,
     FormsModule,
@@ -27,6 +27,6 @@ import { TodoSectionComponent } from "../todo-section/todo-section.component";
   ]
 })
 
-export class ToDoModule{
+export class ToDoModule {
 
 }
